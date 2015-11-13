@@ -12,10 +12,12 @@ logger = logging.getLogger()
 
 def main():
     logging.config.dictConfig(LOGGING)
+    # drop all tables in debug mode
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     # work with session
-    session.add(Member(id=1, name='hello'))
-    session.commit()
+    # session.add(Member(id=1, name='hello'))
+    # session.commit()
     
 
 if __name__ == '__main__':

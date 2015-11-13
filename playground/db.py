@@ -1,8 +1,9 @@
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
+
 
 from settings import DATABASES
 
@@ -44,13 +45,22 @@ def transaction_test():
         trans.commit()
     except:
         trans.rollback()
+        
+        
+class Account(Base):
+    __tablename__ = 'accounts'
+    
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20))
+    member = relationship("Member", uselist=False, backref='accounts')
 
 
 class Member(Base):
     __tablename__ = 'memberships'
     
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String(20))
+    account_id = Column(Integer, ForeignKey('accounts.id'))
     
     def __repr__(self):
          return "<User(name='%s')>" % self.name
