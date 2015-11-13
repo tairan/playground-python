@@ -12,10 +12,11 @@ logger = logging.getLogger()
 
 def main():
     logging.config.dictConfig(LOGGING)
-    query_test()
-    
     Base.metadata.create_all(engine)
-
+    # work with session
+    session.add(Member(id=1, name='hello'))
+    session.commit()
+    
 
 if __name__ == '__main__':
     main()

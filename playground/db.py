@@ -1,5 +1,6 @@
 
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 
@@ -16,7 +17,12 @@ DB_URI = "{0}://{1}:{2}@{3}:{4}/{5}".format(
     DATABASES['default']['NAME']
 )
 
+# an Engine, which the Session will use for connection
 engine = create_engine(DB_URI)
+# create a configured "Session" class
+Session = sessionmaker(bind=engine)
+# create a Session
+session = Session()
 
 def get_connection():
     return engine.connect()
