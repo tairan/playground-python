@@ -59,3 +59,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+USE_TZ = True
+TIME_ZONE = 'Asia/Taipei'

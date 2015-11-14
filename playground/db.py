@@ -7,8 +7,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 
 from settings import DATABASES
 
-Base = declarative_base()
-
 DB_URI = "{0}://{1}:{2}@{3}:{4}/{5}".format(
     DATABASES['default']['ENGINE'],
     DATABASES['default']['USER'],
@@ -45,22 +43,3 @@ def transaction_test():
         trans.commit()
     except:
         trans.rollback()
-        
-        
-class Account(Base):
-    __tablename__ = 'accounts'
-    
-    id = Column(Integer, primary_key=True)
-    name = Column(String(20))
-    member = relationship("Member", uselist=False, backref='accounts')
-
-
-class Member(Base):
-    __tablename__ = 'memberships'
-    
-    id = Column(Integer, primary_key=True)
-    name = Column(String(20))
-    account_id = Column(Integer, ForeignKey('accounts.id'))
-    
-    def __repr__(self):
-         return "<User(name='%s')>" % self.name
